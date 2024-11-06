@@ -27,11 +27,9 @@ class SearchView extends StatelessWidget {
               suffixIcon: Icon(Icons.search),
             ),
             onSubmitted: (value) async {
-              WeatherModel weatherModel = await WeatherService(dio: Dio())
+              weatherModel = await WeatherService(dio: Dio())
                   .getCurrentWeather(cityName: value);
               Navigator.pop(context);
-
-              log(weatherModel.cityName);
             },
           ),
         ),
@@ -39,3 +37,5 @@ class SearchView extends StatelessWidget {
     );
   }
 }
+
+WeatherModel? weatherModel; //global object
