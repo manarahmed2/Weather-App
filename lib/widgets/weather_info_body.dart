@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/models/weather_model.dart';
 
 class WeatherInfoBody extends StatelessWidget {
-  const WeatherInfoBody({super.key});
-
+  const WeatherInfoBody({super.key, required this.weatherModel});
+  final WeatherModel weatherModel;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -10,15 +11,15 @@ class WeatherInfoBody extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
-            'Alexandria',
+          Text(
+            weatherModel.cityName,
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 32,
             ),
           ),
-          const Text(
-            'updated at 23:46',
+          Text(
+            weatherModel.date,
             style: TextStyle(
               fontSize: 24,
             ),
@@ -32,23 +33,23 @@ class WeatherInfoBody extends StatelessWidget {
               Image.asset(
                 'assets/images/cloudy.png',
               ),
-              const Text(
-                '17',
+              Text(
+                "${weatherModel.avgTemp}",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 32,
                 ),
               ),
-              const Column(
+              Column(
                 children: [
                   Text(
-                    'Maxtemp: 24',
+                    'Maxtemp: ${weatherModel.maxTemp}',
                     style: TextStyle(
                       fontSize: 16,
                     ),
                   ),
                   Text(
-                    'Mintemp: 16',
+                    'Mintemp: ${weatherModel.minTemp}',
                     style: TextStyle(
                       fontSize: 16,
                     ),
@@ -60,8 +61,8 @@ class WeatherInfoBody extends StatelessWidget {
           const SizedBox(
             height: 84,
           ),
-          const Text(
-            'Ligh Rain',
+          Text(
+            '${weatherModel.weatherCondition}',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 32,
