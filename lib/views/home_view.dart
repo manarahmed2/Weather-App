@@ -13,10 +13,9 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
         title: const Text(
           'Weather App',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.black),
         ),
         actions: [
           IconButton(
@@ -31,7 +30,7 @@ class HomeView extends StatelessWidget {
               },
               icon: const Icon(
                 Icons.search,
-                color: Colors.white,
+                color: Colors.black,
                 size: 32,
               ))
         ],

@@ -4,21 +4,59 @@ import 'package:weather_app/views/home_view.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const WeatherApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class WeatherApp extends StatelessWidget {
+  const WeatherApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => GetWeatherCubit(),
-      child: const MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: HomeView(),
+      child: Builder(
+        builder: (context) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              useMaterial3: true,
+              primarySwatch: getThemeColor(
+                  BlocProvider.of<GetWeatherCubit>(context)
+                      .weatherModel
+                      ?.weatherCondition),
+            ),
+            home: const HomeView(),
+          );
+        },
       ),
     );
+  }
+}
+
+MaterialColor getThemeColor(String? condition) {
+  if (condition == null) {
+    return Colors.grey;
+  }
+  if (['Sunny', 'Clear', 'Partly cloudy'].contains(condition)) {
+    return Colors.orange;
+  } else if (['Overcast', 'Cloudy', 'Mist', 'Fog'].contains(condition)) {
+    return Colors.blue;
+  } else if ([
+    'Light rain',
+    'Moderate rain',
+    'Patchy rain possible',
+    'Patchy rain nearby',
+  ].contains(condition)) {
+    return Colors.teal;
+  } else if (['Light snow', 'Moderate snow', 'Heavy snow']
+      .contains(condition)) {
+    return Colors.lightBlue;
+  } else if ([
+    'Thundery outbreaks possible',
+    'Moderate or heavy rain with thunder',
+  ].contains(condition)) {
+    return Colors.deepPurple;
+  } else {
+    return Colors.blue; // اللون الافتراضي في حالة عدم تطابق أي حالة
   }
 }
