@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/cubits/get_wearher_cubit/get_weather_cubit.dart';
+import 'package:weather_app/cubits/get_wearher_cubit/get_weather_state.dart';
 import 'package:weather_app/views/home_view.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,16 +16,20 @@ class WeatherApp extends StatelessWidget {
     return BlocProvider(
       create: (context) => GetWeatherCubit(),
       child: Builder(
-        builder: (context) => MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            useMaterial3: true,
-            primarySwatch: getThemeColor(
-                BlocProvider.of<GetWeatherCubit>(context)
-                    .weatherModel
-                    ?.weatherCondition),
-          ),
-          home: const HomeView(),
+        builder: (context) => BlocBuilder<GetWeatherCubit, WeatherState>(
+          builder: (context, state) {
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              theme: ThemeData(
+                useMaterial3: false,
+                primarySwatch: getThemeColor(
+                    BlocProvider.of<GetWeatherCubit>(context)
+                        .weatherModel
+                        ?.weatherCondition),
+              ),
+              home: const HomeView(),
+            );
+          },
         ),
       ),
     );
@@ -33,7 +38,7 @@ class WeatherApp extends StatelessWidget {
 
 MaterialColor getThemeColor(String? condition) {
   if (condition == null) {
-    return Colors.grey;
+    return Colors.blue;
   }
   if (['Sunny', 'Clear', 'Partly cloudy'].contains(condition)) {
     return Colors.orange;
@@ -55,6 +60,6 @@ MaterialColor getThemeColor(String? condition) {
   ].contains(condition)) {
     return Colors.deepPurple;
   } else {
-    return Colors.blue; // اللون الافتراضي في حالة عدم تطابق أي حالة
+    return Colors.grey; // اللون الافتراضي في حالة عدم تطابق أي حالة
   }
 }
